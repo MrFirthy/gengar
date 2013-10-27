@@ -1,0 +1,84 @@
+{{!< default}}
+
+{{! The comment above "< default" means - insert everything in this file into
+    the {body} of the default.hbs template, which contains our header/footer. }}
+
+{{! The big featured header on the homepage, with the site logo and description }}
+<header id="site-head" {{#if @blog.cover}}style="background-image: url({{@blog.cover}})"{{/if}}>
+    <div class="lower">
+        <div id="site-head-content" class="box-sizing">
+
+            <h1 class="blog-title text-bg">{{@blog.title}}</h1>
+            <br/>
+            <h2 class="blog-description text-bg">{{@blog.description}}</h2>
+        </div>
+
+    </div>
+
+    <div class="lower">
+     <section class="social-wrap">
+            {{! Be sure to fill in links to your social media sites here }}
+            <ul>
+                <li><a href="#" class="icon-twitter"></a></li>
+                <li><a href="#" class="icon-facebook"></a></li>
+                <li><a href="#" class="icon-google-plus"></a></li>
+            </ul>
+            {{! For additional Social Media links, simply copy one of the lines
+                above and replace the unicode (e.g. &#xe086;)  in the 'title' with another
+                unicode option from http://drinchev.github.io/monosocialiconsfont/  }}
+    </section>
+    </div>
+
+</header>
+
+
+{{#if @blog.logo}}<a id="blog-logo" href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="Blog Logo" /></a>{{/if}}
+
+
+{{! The main content area on the homepage }}
+<main class="content" role="main">
+    {{! GOOGLE - if posts.length < 1 then don't show 'more from author' title}}
+
+
+
+
+    {{! Each post will be output using this markup }}
+    {{#foreach posts}}
+
+    {{#if @first}}
+        
+        <article class="{{post_class}}" style="padding-bottom: 1rem;">
+            <header class="post-header">
+                <h2 class="post-title center"><a href="{{url}}">{{title}}</a></h2>
+                <span class="post-meta center" style="width: 100%; text-align: center; float: left;"><time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMM YYYY"}}</time> {{#if tags}}on {{tags}}{{/if}}</span>
+
+            </header>
+            <section class="post-excerpt">
+                <p style="text-align:justify;">{{excerpt}}&hellip;</p>
+            </section>
+        </article>
+
+        <h4 class="more-posts">More from {{author}}:</h4>
+        <hr id="this-hr"/>
+
+    {{else}}
+    
+
+        <article class="more-post box-sizing">
+            <header class="post-header">
+
+                <h2 class="post-title"><a href="{{url}}">{{title}}</a></h2>
+                <span class="post-meta"><time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMM YYYY"}}</time> {{#if tags}}on {{tags}}{{/if}}</span>
+                
+            </header>
+        </article>
+    
+
+    {{/if}}
+
+    {{/foreach}}
+
+    {{!! After all the posts, we have the previous/next pagination links }}
+    {{pagination}}
+
+</main>
